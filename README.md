@@ -1,24 +1,25 @@
-# README
+# アプリの作成
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## イメージのビルド
 
-Things you may want to cover:
+```
+$ docker-compose build
+```
 
-* Ruby version
+## コンテナの立ち上げ
 
-* System dependencies
+```
+$ docker-compose up -d
+```
 
-* Configuration
+## 初期設定
 
-* Database creation
+```
+$ docker-compose exec api bash
 
-* Database initialization
+$ bundle exec rails new . --api -d postgresql -T
 
-* How to run the test suite
+$ bundle exec rails db:create
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+$ bundle exec rails s -b 0.0.0.0
+```
