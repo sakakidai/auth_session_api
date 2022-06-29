@@ -23,13 +23,23 @@ module App
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    # ActiveSupport::TimeWithZone(default is utc)
+    config.time_zone = 'Tokyo'
+
+    # DB time zone
+    config.active_record.default_timezone = :local
+
+    # Set locale(default is :en)
+    config.i18n.default_locale = :ja
+
+    # Doc: https://railsguides.jp/configuring.html#config-add-autoload-paths-to-load-path
+    # Doc: https://github.com/fxn/zeitwerk
+    # The directories managed by Zeitwerk do not even need to be in $LOAD_PATH.
+    # Confirm useing Zeitwerk at 'Rails.autoloaders.zeitwerk_enabled?'
+    # Confirm load_path at 'pp $LOAD_PATH'
+    # Confirm autoload_paths at 'pp ActiveSupport::Dependencies.autoload_paths'
+    config.add_autoload_paths_to_load_path = false
+    
 
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
