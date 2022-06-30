@@ -1,12 +1,11 @@
 class Api::V1::RegistrationsController < ApplicationController
   def signup
-    binding.b
     user = User.new(registrations_params)
 
     if user.save
-      render json: { status: :created, user: user }
+      render json: { user: user, message: '新規会員登録が完了しました' }, status: :created
     else
-      render json: { status: :unprocessable_entity, errors: user.errors }
+      render json: { errors: user.errors, message: 'バリデーションエラーがあります' }, status: :unprocessable_entity
     end
   end
 
