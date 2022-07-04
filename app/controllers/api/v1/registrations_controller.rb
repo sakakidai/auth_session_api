@@ -1,6 +1,8 @@
 require "hash_converter"
 
 class Api::V1::RegistrationsController < ApplicationController
+  skip_before_action :require_login
+  
   def signup
     user = User.new(registrations_params)
 
