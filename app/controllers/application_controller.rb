@@ -14,7 +14,6 @@ class ApplicationController < ActionController::API
   end
 
   def require_login
-    binding.b
     return if current_user
 
     render json: { message: 'unauthorized' }, status: :unauthorized
