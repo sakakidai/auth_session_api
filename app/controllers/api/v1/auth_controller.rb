@@ -7,7 +7,8 @@ class Api::V1::AuthController < ApplicationController
     user = User.find_by(email: auth_params[:email])
     if user && user.authenticate(auth_params[:password])
       login(user)
-      render json: { message: 'ログインしました' }, status: :ok
+      user_attributes = user.attributes.with_indifferent_access.slice(:name, :email)
+      render json: { user: HashConverter.to_camel_case(user_attributes), message: 'ログインしました' }, status: :ok
     else
       render json: {  
         message: 'パスワードとメールアドレスが正しくありません' 

@@ -20,9 +20,14 @@ Bundler.require(*Rails.groups)
 
 module App
   class Application < Rails::Application
+    # apiモードだとsession_store.rbの初期化に設定したsession optionsを除いてしまうため、application.rbで設定する
+    if Rails.env.production?
+      config.session_store :cookie_store, key: '_auth_session', domain: ENV["FRONTEND_DOMAIN"]
+    else
+      config.session_store :cookie_store, key: '_auth_session'
+    end
     config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore
-    config.middleware.use ActionDispatch::ContentSecurityPolicy::Middleware
+    config.middleware.use config.session_store, config.session_options
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
