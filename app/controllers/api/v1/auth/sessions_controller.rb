@@ -1,7 +1,16 @@
 require "hash_converter"
 
-class Api::V1::AuthController < ApplicationController
+class Api::V1::Auth::SessionsController < ApplicationController
   skip_before_action :require_login
+
+  def index
+    if current_user
+      user_attributes = current_user.attributes.with_indifferent_access.slice(:name, :email)
+      render json: { user: HashConverter.to_camel_case(user_attributes) }, status: :ok
+    else
+      render json: { message: 'unauthorized' }, status: :unauthorized
+    end
+  end
 
   def create
     user = User.find_by(email: auth_params[:email])

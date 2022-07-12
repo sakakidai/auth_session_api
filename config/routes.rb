@@ -2,8 +2,11 @@ Rails.application.routes.draw do
   get "/", to: redirect("/api/v1/welcome")
   namespace :api do
     namespace :v1 do
-      post '/signin', to: 'auth#create'
-      post '/signup', to: 'registrations#signup'
+      namespace :auth do
+        resources :sessions, only: :index
+        post '/signin', to: 'sessions#create'
+        post '/signup', to: 'registrations#signup'
+      end
       resources :users, only: :index
     end
   end

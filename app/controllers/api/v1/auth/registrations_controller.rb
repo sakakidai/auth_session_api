@@ -1,6 +1,6 @@
 require "hash_converter"
 
-class Api::V1::RegistrationsController < ApplicationController
+class Api::V1::Auth::RegistrationsController < ApplicationController
   skip_before_action :require_login
   
   def signup
