@@ -25,6 +25,11 @@ class Api::V1::Auth::SessionsController < ApplicationController
     end
   end
 
+  def destroy
+    reset_session
+    render json: { status: :ok, message: 'ログアウトしました' }
+  end
+
   private
 
   def auth_params
